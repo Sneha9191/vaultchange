@@ -23,11 +23,11 @@ do
 
   #vault kv metadata put -max-versions=4 prod/${secrets_path}
   # Connect to the database and change the password
-  mysql -u ${username} -p${password} -e "ALTER USER '${username}'@'${dbserver}' IDENTIFIED BY '${ne>
+  mysql -u ${username} -p${password} -e "ALTER USER '${username}'@'${dbserver}' IDENTIFIED BY '${new_password}';"
 
   # Update the password in Hashicorp Vault
   vault kv patch dev/${secrets_path} password=${new_password}
 
   # Verify the password update
-   mysql -u ${username} -p${new_password} -e "SELECT 'Password updated successfully for ${dbname}!';"
+  mysql -u ${username} -p${new_password} -e "SELECT 'Password updated successfully for ${dbname}!';"
 done
